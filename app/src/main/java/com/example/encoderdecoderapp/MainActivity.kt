@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -23,21 +24,35 @@ class MainActivity : AppCompatActivity() {
         var encoder=findViewById<Button>(R.id.encodebtn)
         var decoder=findViewById<Button>(R.id.decodbtn)
         myRV=findViewById(R.id.myRV)
-        encoder.setOnClickListener { var phrase = userinput.text.toString()
-      var output= convert(phrase)
+        encoder.setOnClickListener {
+
+            var phrase = userinput.text.toString()
+            if(phrase.isEmpty()){
+                Toast.makeText(this, "Please Enter a Phrase ", Toast.LENGTH_SHORT).show()
+            }
+
+     else{
+         var output= convert(phrase)
+
            codes.add(Coding("The Original Phrase: $phrase","The Encoded Phrase: $output"))
             myRV.adapter = CodeRVAdapter(codes)
-            myRV.layoutManager = LinearLayoutManager(this)
-
+            myRV.layoutManager = LinearLayoutManager(this)}
+userinput.text.clear()
         }
         decoder.setOnClickListener {
+
             var phrase = userinput.text.toString()
-            var output= convert(phrase)
-            codes.add(Coding("The Original Phrase: $phrase","The Decoded Phrase: $output"))
-            myRV.adapter = CodeRVAdapter(codes)
-            myRV.layoutManager = LinearLayoutManager(this)
+            if(phrase.isEmpty()){
+                Toast.makeText(this, "Please Enter a Phrase ", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                var output = convert(phrase)
 
-
+                codes.add(Coding("The Original Phrase: $phrase", "The Decoded Phrase: $output"))
+                myRV.adapter = CodeRVAdapter(codes)
+                myRV.layoutManager = LinearLayoutManager(this)
+            }
+            userinput.text.clear()
         }
     }
 
